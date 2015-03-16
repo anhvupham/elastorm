@@ -12,7 +12,8 @@ module.exports = function (config) {
     });
     this._body = {
         query: {},
-        sort: {}
+        sort: {},
+        aggs: {}
     };
     this._view = false;
     this._viewRaw = false;
@@ -59,6 +60,26 @@ module.exports = function (config) {
         return this;
     };
 
+    this.aggregation = function (key, field, output) {
+        if (key) {
+            this._body.aggs[key] = {
+                terms: {
+                    field: field
+                },
+                aggs: {
+                    top_tag_hits: {
+                        top_hits: {
+                            "_source": {
+                                include: output
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return this;
+    };
+
     this.results = function (callback) {
         this._es.search({
             index: this._index,
@@ -69,7 +90,7 @@ module.exports = function (config) {
             var items = resp.hits.hits,
                 newitems = [];
             if (this._viewRaw) { //if want to view raw results from es
-                callback(items);
+                callback(resp);
             } else {
                 if (this._view) { //if expected an results template
                     for (var i = 0; i < items.length; i++) {
