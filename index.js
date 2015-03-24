@@ -60,7 +60,7 @@ module.exports = function (config) {
         return this;
     };
 
-    this.aggregation = function (key, field, output) {
+    this.group = function (key, field, output) {
         if (key) {
             this._body.aggs[key] = {
                 terms: {
