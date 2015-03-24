@@ -1,5 +1,5 @@
 # elastorm
-Handy APIs for elastic search querying. Useful if you want to get rid of elasticsearch complicated json query (will be added more APIs soon).
+Some handy APIs for elastic search querying. Useful if you want to get rid of elasticsearch complicated json query (will be added more APIs soon).
 
 #### Installation
 
